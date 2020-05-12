@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SnakeGame.Views;
 
 namespace SnakeGame
 {
@@ -27,12 +28,13 @@ namespace SnakeGame
 
         private void StartGame(object sender, RoutedEventArgs e)
         {
-
+            var window = SnakeWindow.GetSnakeWindow;
+            window.Show();
         }
 
         private void EndGame(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
     }
 }
