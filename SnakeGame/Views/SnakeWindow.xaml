@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeGame.Views"
         mc:Ignorable="d"
-        Title="SnakeWindow" Height="450" Width="800">
+        Title="SnakeWindow" Height="450" Width="800" Closing="SnakeWindow_OnClosed" KeyUp="SnakeMoveSwitch">
     <Grid>
-        <Grid>
-            <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="411,169,0,0" VerticalAlignment="Top"/>
-        </Grid>
+        <Border x:Name="CanvasBorder" BorderBrush="Black">
+            <Canvas Name="snakeCanvas" />
+        </Border>
     </Grid>
 </Window>
