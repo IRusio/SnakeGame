@@ -25,10 +25,28 @@ namespace SnakeGame.Models
             GenerateInitialApple(x, y);
         }
 
+        public void RestartGame()
+        {
+            foreach (var column in gameBoard)
+            {
+                foreach (var boardElement in column)
+                {
+                    boardElement.BoardValue = BoardObjectValue.Free;
+                    boardElement.BoardObject.Fill = null;
+                }
+            }
+            Snake.SnakeQueue.Clear();
+
+            DrawWallOnMap();
+            GenerateInitialSnake(mapSize.MapSizeX, mapSize.MapSizeY);
+            GenerateInitialApple(mapSize.MapSizeX, mapSize.MapSizeY);
+        }
+
+
         private void SetInitialSizeOfWindow(SnakeWindow window, int x, int y, int elementSize)
         {
-            window.Width = y * elementSize;
-            window.Height = x * elementSize;
+            window.Width = (y+2) * (elementSize+1);
+            window.Height = (x+2) * (elementSize+1);
 
         }
 
@@ -63,27 +81,25 @@ namespace SnakeGame.Models
                     {
                         gameBoard[i][j].BoardObject.Fill = Brushes.Black;
                         gameBoard[i][j].BoardValue = BoardObjectValue.Wall;
-
                     }
-
                 }
             }
         }
 
-        public void GenerateInitialSnake(int x, int y)
+        private void GenerateInitialSnake(int x, int y)
         {
             this.Snake = new Snake(x, y);
             gameBoard[x / 2][y / 2].BoardObject.Fill = Brushes.SeaGreen;
             gameBoard[x / 2][y / 2].BoardValue = BoardObjectValue.Snake;
         }
 
-        public void GenerateInitialApple(int x, int y)
+        private void GenerateInitialApple(int x, int y)
         {
             Apple = new Apple(x, y, Snake);
             GenerateApple(x, y);
         }
 
-        public void GenerateApple(int xMax, int yMax)
+        private void GenerateApple(int xMax, int yMax)
         {
             (int x, int y) newApplePosition = Apple.GenerateNewApplePosition(xMax, yMax, Snake);
             gameBoard[newApplePosition.x][newApplePosition.y].BoardValue = BoardObjectValue.Apple;
@@ -125,7 +141,6 @@ namespace SnakeGame.Models
 
         public void UpdateSnakePositionLogic(SnakeBoard snakeBoard)
         {
-            VerifyIsAppleDrawOnMap();
             var isAppleWillBeEaten = IsAppleOnNextMove();
             var res = Snake.MoveSnake(Snake.ActualSnakeDirection, isAppleWillBeEaten);
 
@@ -133,6 +148,9 @@ namespace SnakeGame.Models
             {
                 GenerateApple(mapSize.MapSizeX, mapSize.MapSizeY);
             }
+
+            if (DetectNotCorrectCollision())
+                RestartGame();
 
             if (res.Item1.newSnakeX != -1)
             {
@@ -148,59 +166,18 @@ namespace SnakeGame.Models
             }
         }
 
-        public bool IsAppleOnNextMove()
+        private bool IsAppleOnNextMove()
         {
-            switch (Snake.ActualSnakeDirection)
-            {
-                case DirectionFlag.Left:
-                    return (Snake.SnakeHeadPosition.x, Snake.SnakeHeadPosition.y - 1) == Apple.applePosition;
-                    break;
-                case DirectionFlag.Right:
-                    return (Snake.SnakeHeadPosition.x, Snake.SnakeHeadPosition.y + 1) == Apple.applePosition;
-                    break;
-                case DirectionFlag.Up:
-                    return (Snake.SnakeHeadPosition.x + 1, Snake.SnakeHeadPosition.y) == Apple.applePosition;
-                    break;
-                case DirectionFlag.Down:
-                    return (Snake.SnakeHeadPosition.x - 1, Snake.SnakeHeadPosition.y) == Apple.applePosition;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return Apple.applePosition == Snake.SnakeHeadPosition;
         }
 
-        public void VerifyIsAppleDrawOnMap()
-        {
-            foreach (var column in gameBoard)
-            {
-                foreach (var boardElement in column)
-                {
-                    if (boardElement.BoardValue != BoardObjectValue.Apple &&
-                        boardElement.BoardObject.Fill == Brushes.Red)
-                    {
-                        switch (boardElement.BoardValue)
-                        {
-                            case BoardObjectValue.Free:
-                                boardElement.BoardObject.Fill = null;
-                                break;
-                            case BoardObjectValue.Snake:
-                                boardElement.BoardObject.Fill = Brushes.Green;
-                                break;
-                            case BoardObjectValue.Wall:
-                                boardElement.BoardObject.Fill = Brushes.Black;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    if (boardElement.BoardValue == BoardObjectValue.Apple && boardElement.BoardObject.Fill == Brushes.Red)
-                        return;
-                }
-            }
 
-            var applePosition = Apple.applePosition;
-            gameBoard[applePosition.x][applePosition.y].BoardValue = BoardObjectValue.Apple;
-            gameBoard[applePosition.x][applePosition.y].BoardObject.Fill = Brushes.Red;
+        public bool DetectNotCorrectCollision()
+        {
+            var head = Snake.SnakeHeadPosition;
+            var direction = Snake.ActualSnakeDirection;
+            return gameBoard[head.x][head.y].BoardValue == BoardObjectValue.Snake ||
+                     gameBoard[head.x][head.y].BoardValue == BoardObjectValue.Wall;
         }
     }
 }
