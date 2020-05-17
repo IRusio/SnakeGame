@@ -22,7 +22,7 @@ namespace SnakeGame.Views
         public static SnakeBoard SnakeBoard { get; set; }
         public BackgroundImage BackgroundImage { get; set; }
         public static Configuration Configuration { get; set; }
-        private DispatcherTimer _timer;
+        public DispatcherTimer _timer;
 
         public static SnakeWindow GetSnakeWindow
         {

@@ -30,6 +30,7 @@ namespace SnakeGame.Models
 
         public void RestartGame()
         {
+            Window._timer.Stop();
             foreach (var column in gameBoard)
             {
                 foreach (var boardElement in column)
@@ -43,6 +44,7 @@ namespace SnakeGame.Models
             DrawWallOnMap();
             GenerateInitialSnake(mapSize.MapSizeX, mapSize.MapSizeY);
             GenerateInitialApple(mapSize.MapSizeX, mapSize.MapSizeY);
+            Window._timer.Start();
         }
 
 
@@ -162,18 +164,20 @@ namespace SnakeGame.Models
 
             if (DetectNotCorrectCollision())
                 RestartGame();
-
-            if (res.Item1.newSnakeX != -1)
+            else
             {
-                
-                gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardValue = BoardObjectValue.Snake;
-                gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardObject.Fill = Brushes.Green;
-            }
+                if (res.Item1.newSnakeX != -1)
+                {
 
-            if (res.Item2.oldSnakeX != -1)
-            {
-                gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardValue = BoardObjectValue.Free;
-                gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardObject.Fill = null;
+                    gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardValue = BoardObjectValue.Snake;
+                    gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardObject.Fill = Brushes.Green;
+                }
+
+                if (res.Item2.oldSnakeX != -1)
+                {
+                    gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardValue = BoardObjectValue.Free;
+                    gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardObject.Fill = null;
+                }
             }
         }
 
