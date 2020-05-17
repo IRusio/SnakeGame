@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
 
 namespace SnakeGame.Models
 {
@@ -32,16 +33,16 @@ namespace SnakeGame.Models
             switch (direction)
             {
                 case DirectionFlag.Left:
-                    newSnakeHeadPosition = (SnakeHeadPosition.x - 1, SnakeHeadPosition.y);
+                    newSnakeHeadPosition = (SnakeHeadPosition.x, SnakeHeadPosition.y - 1);
                     break;
                 case DirectionFlag.Right:
-                    newSnakeHeadPosition = (SnakeHeadPosition.x + 1, SnakeHeadPosition.y);
-                    break;
-                case DirectionFlag.Up:
                     newSnakeHeadPosition = (SnakeHeadPosition.x, SnakeHeadPosition.y + 1);
                     break;
+                case DirectionFlag.Up:
+                    newSnakeHeadPosition = (SnakeHeadPosition.x - 1, SnakeHeadPosition.y);
+                    break;
                 case DirectionFlag.Down:
-                    newSnakeHeadPosition = (SnakeHeadPosition.x, SnakeHeadPosition.y - 1);
+                    newSnakeHeadPosition = (SnakeHeadPosition.x + 1, SnakeHeadPosition.y);
                     break;
             }
 
@@ -49,7 +50,9 @@ namespace SnakeGame.Models
             SnakeHeadPosition = newSnakeHeadPosition;
 
             if (!isAppleAte)
+            {
                 snakeElementToDequeue = SnakeQueue.Dequeue();
+            }
             
             return (newSnakeHeadPosition,snakeElementToDequeue);
         }

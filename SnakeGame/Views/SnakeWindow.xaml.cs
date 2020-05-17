@@ -44,7 +44,7 @@ namespace SnakeGame.Views
         private void TimerInitialization()
         {
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(0.5);
+            _timer.Interval = TimeSpan.FromSeconds(0.3);
             _timer.Tick += (sender, e) => GameLogicController(sender, e);
             _timer.Start();
 
@@ -83,6 +83,16 @@ namespace SnakeGame.Views
                         SnakeBoard.ChangeSnakeDirection(DirectionFlag.Right);
                     break;
             }
+        }
+
+        private void SnakeWindow_OnActivation(object sender, EventArgs e)
+        {
+            _timer.Start();
+        }
+
+        private void SnakeWindow_OnDeactivation(object sender, EventArgs e)
+        {
+            _timer.Stop();
         }
     }
 }

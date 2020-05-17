@@ -4,6 +4,7 @@
     {
         Free,
         Snake,
-        Apple
+        Apple,
+        Wall
     }
 }

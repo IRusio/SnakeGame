@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeGame.Views"
         mc:Ignorable="d"
-        Title="SnakeWindow" Height="450" Width="800" Closing="SnakeWindow_OnClosed" KeyUp="SnakeMoveSwitch">
+        Title="SnakeWindow" Height="450" Width="800" Closing="SnakeWindow_OnClosed" KeyUp="SnakeMoveSwitch" Activated="SnakeWindow_OnActivation" Deactivated="SnakeWindow_OnDeactivation">
     <Grid>
         <Border x:Name="CanvasBorder" BorderBrush="Black">
             <Canvas Name="snakeCanvas" />
