@@ -17,12 +17,13 @@ namespace SnakeGame.Models
             Random random = new Random();
             while (true)
             {
-                var point = (x: random.Next(0, countOfWidthPoints), y: random.Next(0, countOfHeightPoints));
-                if (!snake.SnakeQueue.Contains(point))
-                {
-                    applePosition = point;
-                    return point;
-                }
+                return (16, 10);
+                // var point = (x: random.Next(0, countOfWidthPoints), y: random.Next(0, countOfHeightPoints));
+                // if (!snake.SnakeQueue.Contains(point))
+                // {
+                //     applePosition = point;
+                //     return point;
+                // }
             }
         }
 

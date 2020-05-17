@@ -97,5 +97,45 @@ namespace SnakeGame.Models
                         break;
                 }
         }
+
+        public void UpdateSnakePositionLogic(SnakeBoard snakeBoard)
+        {
+            var isAppleWillBeEaten = isAppleOnNextMove();
+            var res = Snake.MoveSnake(Snake.ActualSnakeDirection, isAppleWillBeEaten);
+
+            if (res.Item1.newSnakeX != -1)
+            {
+                
+                gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardValue = BoardObjectValue.Snake;
+                gameBoard[res.Item1.newSnakeX][res.Item1.newSnakeY].BoardObject.Fill = Brushes.Green;
+            }
+
+            if (res.Item2.oldSnakeX != -1)
+            {
+                gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardValue = BoardObjectValue.Free;
+                gameBoard[res.Item2.oldSnakeX][res.Item2.OldSnakeY].BoardObject.Fill = Brushes.White;
+            }
+        }
+
+        public bool isAppleOnNextMove()
+        {
+            switch (Snake.ActualSnakeDirection)
+            {
+                case DirectionFlag.Left:
+                    return (Snake.SnakeHeadPosition.x, Snake.SnakeHeadPosition.y - 1) == Apple.applePosition;
+                    break;
+                case DirectionFlag.Right:
+                    return (Snake.SnakeHeadPosition.x, Snake.SnakeHeadPosition.y + 1) == Apple.applePosition;
+                    break;
+                case DirectionFlag.Up:
+                    return (Snake.SnakeHeadPosition.x + 1, Snake.SnakeHeadPosition.y) == Apple.applePosition;
+                    break;
+                case DirectionFlag.Down:
+                    return (Snake.SnakeHeadPosition.x - 1, Snake.SnakeHeadPosition.y) == Apple.applePosition;
+                    break;
+            }
+
+            return false;
+        }
     }
 }
