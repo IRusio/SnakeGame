@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -11,6 +12,7 @@ namespace SnakeGame.Models
 {
     public class SnakeBoard
     {
+        private SnakeWindow Window;
         private List<List<BoardElement>> gameBoard;
         private Snake Snake;
         private Apple Apple;
@@ -18,6 +20,7 @@ namespace SnakeGame.Models
 
         public SnakeBoard(SnakeWindow window, int x, int y, int elementSize)
         {
+            Window = window;
             mapSize = (x, y);
             SetInitialSizeOfWindow(window, x, y, elementSize);
             GenerateInitialMap(window, x, y, elementSize);
@@ -101,9 +104,17 @@ namespace SnakeGame.Models
 
         private void GenerateApple(int xMax, int yMax)
         {
+            generateNewBackgroundImage();
+
             (int x, int y) newApplePosition = Apple.GenerateNewApplePosition(xMax, yMax, Snake);
             gameBoard[newApplePosition.x][newApplePosition.y].BoardValue = BoardObjectValue.Apple;
             gameBoard[newApplePosition.x][newApplePosition.y].BoardObject.Fill = Brushes.Red;
+        }
+
+        private void generateNewBackgroundImage()
+        {
+            var threadStart = new Thread(() => Window.BackgroundImage.setNewBackgroundImage(Window));
+            threadStart.Start();
         }
 
         public DirectionFlag GetCurrentSnakeDirection()

@@ -20,7 +20,7 @@ namespace SnakeGame.Views
     {
         private static SnakeWindow Window { get; set; }
         public static SnakeBoard SnakeBoard { get; set; }
-        public static BackgroundImage BackgroundImage { get; set; }
+        public BackgroundImage BackgroundImage { get; set; }
         public static Configuration Configuration { get; set; }
         private DispatcherTimer _timer;
 
@@ -36,11 +36,10 @@ namespace SnakeGame.Views
 
         private SnakeWindow()
         {
+            BackgroundImage = new BackgroundImage();
             Configuration = new Configuration();
             InitializeComponent();
             SnakeBoard = new SnakeBoard(this, 30, 20, 20);
-            //TODO: change this on normal image whos will be pinned to project.
-            snakeCanvas.Background = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\jakub\\source\\repos\\SnakeGame\\SnakeGame\\Assets\\images\\Screenshot_1586838318.png", UriKind.Absolute)));
             TimerInitialization();
         }
 
