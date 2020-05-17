@@ -190,9 +190,8 @@ namespace SnakeGame.Models
         public bool DetectNotCorrectCollision()
         {
             var head = Snake.SnakeHeadPosition;
-            var direction = Snake.ActualSnakeDirection;
             return gameBoard[head.x][head.y].BoardValue == BoardObjectValue.Snake ||
-                     gameBoard[head.x][head.y].BoardValue == BoardObjectValue.Wall;
+                   gameBoard[head.x][head.y].BoardValue == BoardObjectValue.Wall;
         }
     }
 }

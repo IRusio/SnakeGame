@@ -39,7 +39,7 @@ namespace SnakeGame.Views
             BackgroundImage = new BackgroundImage();
             Configuration = new Configuration();
             InitializeComponent();
-            SnakeBoard = new SnakeBoard(this, 30, 20, 20);
+                SnakeBoard = new SnakeBoard(this, 40, 40, 20);
             TimerInitialization();
         }
 

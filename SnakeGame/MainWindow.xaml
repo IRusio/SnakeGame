@@ -5,14 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="200">
+        Title="MainWindow" Height="300" Width="250">
     <Grid>
         <Button x:Name="Start" Content="Start" Margin="50,56,50,134" Click="StartGame"/>
         <Button x:Name="End" Content="End" Margin="50,120,50, 70" Click="EndGame"/>
-        <Label x:Name="label" Content="X
-               " HorizontalAlignment="Left" Margin="90,28,0,0" VerticalAlignment="Top" Width="20" Height="21"/>
-        <TextBox x:Name="x_axis" HorizontalAlignment="Left" Margin="10,31,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" PreviewTextInput="NumberValidationTextBox"/>
-        <TextBox x:Name="y_axis" HorizontalAlignment="Left" Margin="134,31,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" PreviewTextInput="NumberValidationTextBox"/>
     </Grid>
 
 
