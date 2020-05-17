@@ -20,6 +20,8 @@ namespace SnakeGame.Views
     {
         private static SnakeWindow Window { get; set; }
         public static SnakeBoard SnakeBoard { get; set; }
+        public static BackgroundImage BackgroundImage { get; set; }
+        public static Configuration Configuration { get; set; }
         private DispatcherTimer _timer;
 
         public static SnakeWindow GetSnakeWindow
@@ -34,6 +36,7 @@ namespace SnakeGame.Views
 
         private SnakeWindow()
         {
+            Configuration = new Configuration();
             InitializeComponent();
             SnakeBoard = new SnakeBoard(this, 30, 20, 20);
             //TODO: change this on normal image whos will be pinned to project.
